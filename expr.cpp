@@ -15,12 +15,12 @@ public:
 };
 
 
-class ConstantExpr : public Expr {
+class ConstExpr : public Expr {
 private:
 	int value;
 
 public:
-	ConstantExpr(int value) {
+	ConstExpr(int value) {
 		this->value = value;
 	}
 
@@ -29,7 +29,7 @@ public:
 	}
 
 	Expr* differentiate() {
-		return new ConstantExpr(0);
+		return new ConstExpr(0);
 	}
 };
 
@@ -44,11 +44,11 @@ public:
 	}
 
 	string toString() {
-		return to_string(this->value);
+		return string(1, this->value);
 	}
 
 	Expr* differentiate() {
-		return new ConstantExpr(1);
+		return new ConstExpr(1);
 	}
 };
 
@@ -138,6 +138,37 @@ public:
 				new MulExpr(lExpr, rExpr->differentiate())
 			),
 			new MulExpr(rExpr, rExpr)
+		);
+	}
+};
+
+// 4x ^ 3
+// 3 * (x ^ 2)
+class ExpExpr : public Expr {
+private:
+	Expr* lExpr;
+	Expr* rExpr;
+
+public:
+	ExpExpr(Expr* lExpr, Expr* rExpr) {
+		this->lExpr = lExpr;
+		this->rExpr = rExpr;
+	}
+
+	string toString() {
+		return "(" + this->lExpr->toString() +  "^" + this->rExpr->toString() + ")";
+	}
+
+	Expr* differentiate() {
+		return new MulExpr(
+			rExpr,
+			new ExpExpr(
+				lExpr,
+				new SubExpr(
+					rExpr,
+					new ConstExpr(1)
+				)
+			)
 		);
 	}
 };
