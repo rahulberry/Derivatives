@@ -5,34 +5,19 @@
 
 using namespace std;
 
-/*
- *  Example:
- *
- *    "(2 * (x ^ 3)) + (4 * (x ^ 2))
- *    			|
- *    			v
- *
- *    new AddExpr(
- *        new MulExpr(
- *        	  ConstExpr(2),
- *        	  ExpExpr(
- *        	  	  VarExpr('x'),
- *        	  	  ConstExpr(3)
-*        	  )
- *        ),
- *        new MulExpr(
- *        	  ConstExpr(4),
- *        	  ExpExpr(
- *        	  	  VarExpr('x'),
- *        	  	  ConstExpr(2)
-*        	  )
- *        )
- *    )
- *
- *    for( i = n,
- */
+AddExpr* termsToAddExpr(vector<Expr*> terms) {
+	if (terms.size() == 1) {
+		return new AddExpr(terms[0], terms[1]);
+	}
+	else {
+		Expr* back = terms.back();
+		terms.pop_back();
+		return new AddExpr(termsToAddExpr(terms), back);
+	}
+}
 
-int main() {
+
+int main(){
 
 	cout <<  "\n \n \n******************************************************************"<< endl ;
 	cout << " This program can be used to determine the derivatives polynomials " << endl;
@@ -64,22 +49,8 @@ int main() {
 			)
 		));
 	}
-
-	for (int i = 0; i < terms.size(); i++) {
-		cout << terms[i]->toString() << endl;
-	}
-
-	AddExpr* expr;
-	// add terms into the AddExpr
-
+	AddExpr* expr = termsToAddExpr(terms);
 	cout << expr->toString() << endl;
-	cout << expr->differentiate()->toString() << endl;
-	return 0;
-
-//	string input;
-//	getline(cin, input);
-//	Expr* expr = parse(input);
-//	cout << expr->toString() << endl;
-//	cout << expr->differentiate()->toString() << endl;
+	cout << "The derivative is " <<  expr->differentiate()->toString() << endl;
 	return 0;
 }
