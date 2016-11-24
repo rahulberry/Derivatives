@@ -8,8 +8,7 @@ using namespace std;
 /*
  *  Example:
  *
- *    "(2 * (x ^ 3)) + (4 * (x ^ 2)) + (4 * (x ^ 2)) + (4 * (x ^ 2)) + (4 * (x ^ 2))"
- *
+ *    "(2 * (x ^ 3)) + (4 * (x ^ 2))
  *    			|
  *    			v
  *
@@ -33,20 +32,32 @@ using namespace std;
  *    for( i = n,
  */
 
-int main(int argc, char** argv) {
+int main() {
+
+	cout <<  "\n \n \n******************************************************************"<< endl ;
+	cout << " This program can be used to determine the derivatives polynomials " << endl;
+	cout << "\n1. Please enter the number of terms in the polynomials" << endl;
+	cout << "2. To exit the program please enter 0" << endl;
+	cout <<  "\n ******************************************************************" << endl;
 
 	int numTerms;
 	cin >> numTerms;
 
-	int multiplier;
+	if(numTerms == 0){
+		cout << "\nBye!" << endl;
+		return 0;
+	}
+
+	cout << "Please enter the coefficient and exponent of all "<< numTerms << " terms" << endl;
+	int coef;
 	int exponent;
 
 	vector<Expr*> terms;
 	for (int i = 0; i < numTerms; i++) {
-		cin >> multiplier;
+		cin >> coef;
 		cin >> exponent;
 		terms.push_back(new MulExpr(
-			new ConstExpr(multiplier),
+			new ConstExpr(coef),
 			new ExpExpr(
 				new VarExpr('x'),
 				new ConstExpr(exponent)
