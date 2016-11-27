@@ -106,14 +106,20 @@ public:
 	string toString() {
 		return "(" + this->lExpr->toString() +  "*" + this->rExpr->toString() + ")";
 	}
-
+	/*
 	Expr* differentiate() {
-		return new AddExpr(
-			new MulExpr(lExpr, rExpr->differentiate()),
-			new MulExpr(lExpr->differentiate(), rExpr)
+
+			return new AddExpr(
+					new MulExpr(lExpr, rExpr->differentiate()),
+					new MulExpr(lExpr->differentiate(), rExpr)
 		);
 	}
+*/
+	Expr* differentiate() {
+		return new MulExpr(lExpr, rExpr->differentiate());
+	}
 };
+
 
 
 class DivExpr : public Expr {
@@ -142,8 +148,6 @@ public:
 	}
 };
 
-// 4x ^ 3
-// 3 * (x ^ 2)
 class ExpExpr : public Expr {
 private:
 	Expr* lExpr;
