@@ -10,7 +10,11 @@ public:
 	}
 
 	virtual Expr* differentiate() {
-		return new Expr();
+		return this;
+	}
+
+	virtual Expr* simplify() {
+		return this;
 	}
 };
 
@@ -31,6 +35,10 @@ public:
 	Expr* differentiate() {
 		return new ConstExpr(0);
 	}
+
+	Expr* simplify() {
+		return this;
+	}
 };
 
 
@@ -49,6 +57,10 @@ public:
 
 	Expr* differentiate() {
 		return new ConstExpr(1);
+	}
+
+	Expr* simplify() {
+		return this;
 	}
 };
 
@@ -71,6 +83,10 @@ public:
 	Expr* differentiate() {
 		return new AddExpr(lExpr->differentiate(), rExpr->differentiate());
 	}
+
+	Expr* simplify() {
+		return this;
+	}
 };
 
 class SubExpr : public Expr {
@@ -89,6 +105,10 @@ public:
 
 	Expr* differentiate() {
 		return new SubExpr(lExpr->differentiate(), rExpr->differentiate());
+	}
+
+	Expr* simplify() {
+		return this;
 	}
 };
 
@@ -118,6 +138,10 @@ public:
 	Expr* differentiate() {
 		return new MulExpr(lExpr, rExpr->differentiate());
 	}
+
+	Expr* simplify() {
+		return this;
+	}
 };
 
 
@@ -145,6 +169,10 @@ public:
 			),
 			new MulExpr(rExpr, rExpr)
 		);
+	}
+
+	Expr* simplify() {
+		return this;
 	}
 };
 
@@ -174,5 +202,9 @@ public:
 				)
 			)
 		);
+	}
+
+	Expr* simplify() {
+		return this;
 	}
 };

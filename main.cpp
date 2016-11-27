@@ -55,6 +55,7 @@ int main(){
 
 	int n;
 	cin >> n;
+
 	if ( n == 1 ){
 		cout << "The derivative is " <<  expr->differentiate()->toString() << endl;
 	return 0;
