@@ -51,31 +51,14 @@ int main(){
 	AddExpr* expr = termsToAddExpr(terms);
 	cout <<"You have entered f(x) = " <<expr->toString() << endl;
 	cout << "Would you like to know the first, second or third derivative of the polynomial" << endl;
-	cout << "\n1. Please enter 1, 2 or 3 for the first, second or third derivative" << endl;
+	cout << "\n1. Please enter the number of derivatives you would like to know" << endl;
 
 	int n;
 	cin >> n;
 
-	if ( n == 1 ){
-		cout << "The derivative is " <<  expr->differentiate()->toString() << endl;
-	return 0;
-	}
-
-	if ( n == 2 ){
-		cout << "The second derivative is " <<  expr->differentiate()->differentiate()->toString() << endl;
-	return 0;
-	}
-	if ( n == 3 ){
-		cout << "The third derivative is " <<  expr->differentiate()->differentiate()->differentiate()->toString() << endl;
-	return 0;
+	Expr* derivative = expr;
+	for (int i = 0; i < n; i++) {
+		derivative = derivative->differentiate();
+		cout << "f"<<i+1<<"(x)=" << derivative->toString() << endl;
 	}
 }
-
-/* if ( n == 1) {
- *	cout << expr->differentiate()->toString() << endl;
- *
- * 	else{
- * 	bye
- *
- *
- */

@@ -12,15 +12,11 @@ public:
 	virtual Expr* differentiate() {
 		return this;
 	}
-
-	virtual Expr* simplify() {
-		return this;
-	}
 };
 
 
+
 class ConstExpr : public Expr {
-private:
 	int value;
 
 public:
@@ -35,15 +31,11 @@ public:
 	Expr* differentiate() {
 		return new ConstExpr(0);
 	}
-
-	Expr* simplify() {
-		return this;
-	}
 };
 
 
+
 class VarExpr : public Expr {
-private:
 	char value;
 
 public:
@@ -58,15 +50,11 @@ public:
 	Expr* differentiate() {
 		return new ConstExpr(1);
 	}
-
-	Expr* simplify() {
-		return this;
-	}
 };
 
 
+
 class AddExpr : public Expr {
-private:
 	Expr* lExpr;
 	Expr* rExpr;
 
@@ -83,14 +71,11 @@ public:
 	Expr* differentiate() {
 		return new AddExpr(lExpr->differentiate(), rExpr->differentiate());
 	}
-
-	Expr* simplify() {
-		return this;
-	}
 };
 
+
+
 class SubExpr : public Expr {
-private:
 	Expr* lExpr;
 	Expr* rExpr;
 public:
@@ -107,13 +92,11 @@ public:
 		return new SubExpr(lExpr->differentiate(), rExpr->differentiate());
 	}
 
-	Expr* simplify() {
-		return this;
-	}
 };
 
+
+
 class MulExpr : public Expr {
-private:
 	Expr* lExpr;
 	Expr* rExpr;
 
@@ -127,6 +110,7 @@ public:
 		return "(" + this->lExpr->toString() +  "*" + this->rExpr->toString() + ")";
 	}
 	/*
+	 * product rule for other integrals
 	Expr* differentiate() {
 
 			return new AddExpr(
@@ -139,15 +123,12 @@ public:
 		return new MulExpr(lExpr, rExpr->differentiate());
 	}
 
-	Expr* simplify() {
-		return this;
-	}
+
 };
 
 
 
 class DivExpr : public Expr {
-private:
 	Expr* lExpr;
 	Expr* rExpr;
 
@@ -170,14 +151,11 @@ public:
 			new MulExpr(rExpr, rExpr)
 		);
 	}
-
-	Expr* simplify() {
-		return this;
-	}
 };
 
+
+
 class ExpExpr : public Expr {
-private:
 	Expr* lExpr;
 	Expr* rExpr;
 
@@ -202,9 +180,5 @@ public:
 				)
 			)
 		);
-	}
-
-	Expr* simplify() {
-		return this;
 	}
 };
