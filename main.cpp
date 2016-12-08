@@ -50,8 +50,7 @@ int main(){
 	}
 	AddExpr* expr = termsToAddExpr(terms);
 	cout <<"You have entered f(x) = " <<expr->toString() << endl;
-	cout << "Would you like to know the first, second or third derivative of the polynomial" << endl;
-	cout << "\n1. Please enter the number of derivatives you would like to know" << endl;
+	cout << "\n1. Please enter the number of derivatives you would like to determine" << endl;
 
 	int n;
 	cin >> n;
